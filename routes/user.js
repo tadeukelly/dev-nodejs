@@ -40,7 +40,7 @@ router.get('/isloggedin', function(req, res, next) {
 router.post('/signup',
     passport.authenticate('local-signup'),
     function(req, res) {     
-    res.json(req.user);
+    res.json(req.user);    
 });
 
 

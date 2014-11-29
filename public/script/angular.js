@@ -1,28 +1,73 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ui.router']);
 
-app.controller('TextController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
-  
-  $http.get('/user/isloggedin')
-      .success(function(response) {
-            if (response.status.trim().toLowerCase() == "success"){
-              $scope.GetMenuApi();
-              $scope.usuarioLogado = true;
-            }
-            else
-              $scope.usuarioLogado = false;
+app.config(function($stateProvider, $urlRouterProvider) {
+    
+    $urlRouterProvider.otherwise('/login');
+    
+    $stateProvider
+        
+        .state('login', {
+            url: '/login',
+            templateUrl: '../partials/partial-login.html',
+            controller: 'LoginController'
+        })
+        
+        .state('signin', {
+            url: '/signin',
+            templateUrl: '../partials/partial-signin.html',
+            controller: 'LoginController'
+        })
+
+        .state('app', {
+            url: '/app',
+            templateUrl: '../partials/partial-main.html',
+            controller: 'MainController'
+        })  
+
+        .state('app.organizacao', {
+            url: '/organizacao',
+            templateUrl: '../partials/partial-main-organizacao.html',
+            controller: 'MainController'        
+        })      
+        
+});
+
+
+
+app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$rootScope', function($scope, $http, $timeout, $state, $rootScope) {
+// enumerate routes that don't need authentication
+  var routesThatDontRequireAuth = ['/login'];
+
+  // check if current location matches route  
+  var routeClean = function (route) {
+    return _.find(routesThatDontRequireAuth,
+      function (noAuthRoute) {
+        return _.str.startsWith(route, noAuthRoute);
       });
-  $scope.signIn = false;
-	
+  };
+
+  $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    // if route requires auth and user is not logged in
+    if (!routeClean($location.url())) 
+    {
+      console.log("aqui");
+      $http.get('/user/isloggedin')
+          .success(function(response) {        
+                if (response.status.trim().toLowerCase() == "success"){              
+                  $state.go('app');                  
+                }            
+      });            
+    }
+  });
+  
   $scope.Login = function() {
       $http.post('/user/login', {
           username: $scope.username,
           password: $scope.password,
         }).success(function(response) {
-            if (response.status.trim().toLowerCase() == "success") {              
-              $scope.GetMenuApi();
-              $scope.usuarioLogado = true;
+            if (response.status.trim().toLowerCase() == "success") {
+              $state.go('app');
             } else {
-              $scope.usuarioLogado = false;              
               showAlert('warning', 'Oooops!', response.message.trim());
             } 
           })
@@ -51,6 +96,34 @@ app.controller('TextController', ['$scope', '$http', '$timeout', function($scope
           });
   };
 
+  var alertTimeout;
+  function showAlert(type, title, message, timeout) {
+      $scope.alert = {
+        hasBeenShown: true,
+        show: true,
+        type: type,
+        message: message,
+        title: title
+      };
+      $timeout.cancel(alertTimeout);
+      alertTimeout = $timeout(function() {
+        $scope.alert.show = false;
+      }, timeout || 3000);
+    }
+
+  }
+]);  
+
+
+app.controller('MainController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
+  
+  $http.get('/user/isloggedin')
+      .success(function(response) {
+            if (response.status.trim().toLowerCase() != "success"){              
+              $state.go('login');
+            }            
+      });      
+	
   $scope.GetMenuApi = function() {          
       $http.get("/api/menu").
       success(function(response, status, headers, config) {

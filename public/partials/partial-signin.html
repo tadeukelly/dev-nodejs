@@ -1,0 +1,18 @@
+    <!-- Messages -->    
+    <div id="fullscreen_bg" class="fullscreen_bg">
+        <div class="container">
+          <div class="alert alert-{{alert.type}} animated main-alert" ng-class="{'fadeInRight': alert.show, 'fadeOutLeft': !alert.show, 'alert-hidden': !alert.hasBeenShown}">
+              <strong>{{alert.title}}</strong> {{alert.message}}
+          </div>
+        </div>
+    </div>
+    <!-- SignIn Form -->    
+    <div class="container animated fadeInDown">
+        <form class="form-signin" role="form" ng-submit="SignUp()">        
+          <h1 class="form-signin-heading text-muted">Novo</h1>
+          <input type="text" class="form-control" placeholder="Informe um nome de usuario" ng-model="username" ng-required="true" autofocus>
+          <input type="password" class="form-control" placeholder="Cadastre sua senha" ng-model="password" ng-required="true">
+          <button class="btn btn-lg btn-success btn-block" type="submit"><span class="glyphicon glyphicon-ok"></span> Criar Usuario</button>
+          <h6 class="form-signin-footer text-muted">Caso já possua uma conta, <a ui-sref="login">Clique Aqui</a>.</h6>          
+        </form>
+    </div>

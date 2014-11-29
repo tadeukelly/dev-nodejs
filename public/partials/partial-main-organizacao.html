@@ -1,0 +1,36 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Organização</h3>
+  </div>
+  <div class="panel-body">  
+  <div class="col-sm-12">
+          <form class="form-bus_org" role="form" ng-submit="ConsultaBusOrg()">        
+          <input type="text" class="form-control" style="width:360px;" placeholder="Informe um nome de Organização" ng-model="bus_org_name" ng-required="true" autofocus>          
+          <button class="btn btn-info" type="submit"><span class="{{wheel}}"></span> Consultar Organização</button>
+          </form>          
+          <table class="table table-hover" ng-hide="!organizacao.length">
+          <tr>
+          <td><strong>Org Id</strong></td>
+          <td><strong>Name</strong></td>
+          <td><strong>Alt Name</strong></td>
+          <td><strong>CNPJ</strong></td>
+          <td><strong>Type</strong></td>
+          <td><strong>Mercado</strong></td>
+          <td><strong>Segmento</strong></td>
+          <td><strong>Tipo</strong></td>
+          </tr>
+          <tr ng-repeat="org in organizacao">
+            <td>{{org.org_id}}</td>
+            <td>{{org.name}}</td>
+            <td>{{org.alt_name}}</td>
+            <td>{{org.x_cnpj}}</td>
+            <td>{{org.type}}</td>
+            <td>{{org.x_mercado}}</td>
+            <td>{{org.x_segmento}}</td>
+            <td>{{org.x_tipo_pessoa}}</td>
+          </tr>
+          </table> 
+                   
+</div>
+  </div>
+</div>
