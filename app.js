@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //*********************************//
 //***    Configure Passport     ***//
 //*********************************//
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch', 
+app.use(session({ secret: 'theozucoxexelentinhasecrettadeunewbabythanksgod', 
                  saveUninitialized: true,
                  resave: true })); // session secret
 app.use(passport.initialize());
