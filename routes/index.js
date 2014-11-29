@@ -3,8 +3,8 @@ var router 			= express.Router();
 var fortune 		= require('../lib/fortune');
 
 router.get('/', function(req, res) {	
-	 res.sendFile('/home/tadeukelly/dev/angularjs/dev-nodejs/public/index.html'); //uncomment for local
-	 //res.sendFile('/app/public/index.html'); //uncomment for heroku
+	 //res.sendFile('/home/tadeukelly/dev/angularjs/dev-nodejs/public/index.html'); //uncomment for local
+	 res.sendFile('/app/public/index.html'); //uncomment for heroku
 });
 
 router.post('/post',function(req,res){
