@@ -1,0 +1,180 @@
+.main-alert {
+  max-width: 400px;
+  margin: 0 auto;
+  margin: 20px auto;
+  margin-bottom: 10px;
+}
+.navbar {    
+  margin-bottom: 0px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.sidebar-menu-glyphicon {
+  margin-right: 10px;
+ }
+.sidebar {    
+  padding-right: 0px;  
+  width: 220px;  
+}
+.list-group {
+  font-size: 13px;   
+}
+.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;        
+}
+.list-group-item:last-child {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;  
+}
+.panel {
+margin-top: 15px;
+}
+/* Spinning Wheel*/
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+/*Copy and paste from http://bootsnipp.com/snippets/featured/login-screen-with-background*/
+body{
+  background-color: #fff;
+  font-family: 'Open Sans';
+}
+label
+{
+  font-size: 15px;
+}
+.fullscreen_bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url('../images/bg.jpg');
+  background-repeat:repeat;
+}
+.form-control{
+  font-size: 13px;
+}
+.btn
+{
+ border-radius: 0px;
+}
+.form-signin {
+  max-width: 280px;
+  padding: 15px;
+  margin: 0 auto;
+  margin-top:100px;
+}
+.form-signin .form-signin-heading, .form-signin {
+  margin-bottom: 10px;
+}
+.form-signin .form-control {
+  font-size: 14px;
+  height: auto;
+  padding: 10px;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;  
+}
+
+.form-signin-heading {
+  color: #fff;
+  text-align: center;  
+  font-weight: 700;
+  /*text-shadow: 0 2px 2px rgba(0,0,0,0.5);*/
+}
+.form-signin-footer {
+  color: #fff;
+  text-align: left;
+  /*text-shadow: 0 2px 2px rgba(0,0,0,0.5);*/
+}
+
+
+/********************************************/
+
+/********************************************/
+/* navbar by http://twbscolor.smarchal.com/ */
+/*http://twbscolor.smarchal.com/scss?bd=4d85c4&bh=4e9cd6&cd=ecf0f1&ch=364656*/
+/*
+.list-group-item.active {  
+  background-color: #F5F5F5;
+  border-color: #DDDDDD;
+  text-align: center;
+  color: #000000;  
+}*/
+
+.navbar-default {  
+  background-color: #428bca;
+  border: 0px;  
+}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #364656;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #364656;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #364656;
+  background-color: #4e9cd6;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #364656;
+  background-color: #4e9cd6;
+}
+.navbar-default .navbar-toggle {
+  border-color: #4e9cd6;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #4e9cd6;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #364656;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ecf0f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #364656;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #364656;
+    background-color: #4e9cd6;
+  }
+}

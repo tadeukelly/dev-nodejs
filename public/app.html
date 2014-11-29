@@ -1,0 +1,213 @@
+<!doctype html>
+<html ng-app="myApp"> 
+  <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">   
+    <link rel="stylesheet" href="style/style.css">
+    <script src="/bower_components/angular/angular.min.js"></script>    
+    <script src="script/angular.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
+  </head>
+  <body ng-controller="TextController">
+    <!--============================-->
+    <!--      Application Login     -->
+    <!--============================-->
+    <!-- Messages -->    
+    
+    <div id="fullscreen_bg" class="fullscreen_bg" ng-show="!usuarioLogado">
+        <div class="container">
+          <div class="alert alert-{{alert.type}} animated main-alert" ng-class="{'fadeInRight': alert.show, 'fadeOutLeft': !alert.show, 'alert-hidden': !alert.hasBeenShown}">
+              <strong>{{alert.title}}</strong> {{alert.message}}
+          </div>
+        </div>
+    </div>
+    
+
+    <!-- Login Form -->
+    
+    <div class="container animated" ng-class="{'fadeInDown': !usuarioLogado, 'fadeOutDown': usuarioLogado, 'ng-hide': usuarioLogado}" ng-hide="usuarioLogado || signIn">
+        <form class="form-signin" role="form" ng-submit="Login()">        
+          <h1 class="form-signin-heading text-muted">Login</h1>
+          <input type="text" class="form-control" placeholder="Usuario" ng-model="username" ng-required="true" autofocus>
+          <input type="password" class="form-control" placeholder="Senha" ng-model="password" ng-required="true">        
+          <button class="btn btn-lg btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+          <h6 class="form-signin-footer text-muted">Caso não possua uma conta, <a href="" ng-click="signIn=true">Clique Aqui</a>.</h6>          
+        </form>
+    </div> 
+    
+
+    <!-- SignIn Form -->
+    
+    <div class="container animated" ng-class="{'fadeInDown': !usuarioLogado, 'fadeOutDown': usuarioLogado, 'ng-hide': usuarioLogado}" ng-show="signIn">
+        <form class="form-signin" role="form" ng-submit="SignUp()">        
+          <h1 class="form-signin-heading text-muted">Novo</h1>
+          <input type="text" class="form-control" placeholder="Informe um nome de usuario" ng-model="username" ng-required="true" autofocus>
+          <input type="password" class="form-control" placeholder="Cadastre sua senha" ng-model="password" ng-required="true">
+          <button class="btn btn-lg btn-success btn-block" type="submit"><span class="glyphicon glyphicon-ok"></span> Criar Usuario</button>
+          <h6 class="form-signin-footer text-muted">Caso já possua uma conta, <a href="" ng-click="signIn=false">Clique Aqui</a>.</h6>          
+        </form>
+    </div>   
+    
+
+    <div ng-show="usuarioLogado">    
+      <!--============================-->
+      <!--   Application NavBar       -->
+      <!--============================-->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!--<div class="container-fluid">-->
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Menu</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">              
+              <li ng-repeat="item in menu"><a href="#">{{item.menu}}</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acoes <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <!--
+            <form class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="yourName" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            -->
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-align-justify" id="slide-submenu"></span></a></li>
+              <li><a href="#">Link</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>                  
+                </ul>
+              </li>              
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        <!--</div>--><!-- /.container-fluid -->
+      </nav>
+    </div>
+
+      <!--============================-->
+      <!--    Application Body Row    -->
+      <!--============================-->
+      <!--
+      <div class="row">
+        <div class="col-md-3">
+          <label>Nome do Cliente</label>
+          <input type="text" class="form-control" ng-model="yourName" placeholder="Enter a name here">
+          Hello {{yourName}}!{{escolhida}}
+          <br>
+          <textarea class="form-control"></textarea>
+          <a class="btn btn-primary">Flat button</a>
+          <button type="button" class="btn btn-primary" ng-click="ChangeBtn()">Change Button</button>
+          <button type="button" class="btn btn-success">Save changes</button>
+          <button type="button" class="btn {{tipo}}">Save changes</button>
+        </div>
+        <div class="col-md-6">.col-md-1</div>
+        <div class="col-md-3">.col-md-1</div>
+      </div>
+-->
+
+
+<!---------------------------------->
+
+
+  <div class="row" ng-show="usuarioLogado">
+    <div class="col-sm-2 sidebar">
+    <div class="list-group">        
+        <!--<span href="#" class="list-group-item">
+        <span class="glyphicon glyphicon-th-list sidebar-menu-glyphicon"></span>Submenu            
+        </span>-->
+        <a href="#" class="list-group-item" ng-repeat="item in menu"><span class="glyphicon glyphicon-folder-open sidebar-menu-glyphicon"></span>{{item.menu}}</a>        
+    </div>
+    </div>
+    <div class="col-sm-10">
+
+<!-- CONTENT -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Organização</h3>
+  </div>
+  <div class="panel-body">  
+  <div class="col-sm-12">
+          <form class="form-bus_org" role="form" ng-submit="ConsultaBusOrg()">        
+          <input type="text" class="form-control" style="width:360px;" placeholder="Informe um nome de Organização" ng-model="bus_org_name" ng-required="true" autofocus>          
+          <button class="btn btn-info" type="submit"><span class="{{wheel}}"></span> Consultar Organização</button>
+          </form>          
+          <table class="table table-hover" ng-hide="!organizacao.length">
+          <tr>
+          <td><strong>Org Id</strong></td>
+          <td><strong>Name</strong></td>
+          <td><strong>Alt Name</strong></td>
+          <td><strong>CNPJ</strong></td>
+          <td><strong>Type</strong></td>
+          <td><strong>Mercado</strong></td>
+          <td><strong>Segmento</strong></td>
+          <td><strong>Tipo</strong></td>
+          </tr>
+          <tr ng-repeat="org in organizacao">
+            <td>{{org.org_id}}</td>
+            <td>{{org.name}}</td>
+            <td>{{org.alt_name}}</td>
+            <td>{{org.x_cnpj}}</td>
+            <td>{{org.type}}</td>
+            <td>{{org.x_mercado}}</td>
+            <td>{{org.x_segmento}}</td>
+            <td>{{org.x_tipo_pessoa}}</td>
+          </tr>
+          </table> 
+                   
+</div>
+  </div>
+</div>
+
+<!-- END CONTENT -->
+
+    </div>    
+  </div>
+
+
+<!---------------------------------->
+
+    
+        
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <script>
+    $(function(){
+      $('#slide-submenu').on('click',function() {             
+        $('.sidebar').is(":visible") ? $('.sidebar').fadeOut() : $('.sidebar').fadeIn();
+      });
+    })
+    </script>
+
+  </body>
+</html>
