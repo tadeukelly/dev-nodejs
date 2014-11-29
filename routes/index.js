@@ -4,7 +4,7 @@ var fortune 		= require('../lib/fortune');
 
 router.get('/', function(req, res) {	
 	 //res.sendFile('/home/tadeukelly/dev/angularjs/node-dashboard/public/app.html');		 
-	 res.sendfile('app.html', { root: '/public/' });
+	 res.sendfile(__dirname + '/public/app.html');
 });
 
 router.post('/post',function(req,res){
