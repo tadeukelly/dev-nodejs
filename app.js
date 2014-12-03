@@ -12,7 +12,56 @@ var routes  		= require('./routes/index');
 var user    		= require('./routes/user');
 var api     		= require('./routes/api');
 var app 			= express();
+var http 			= require('http').createServer(app);
+var io 				= require('socket.io').listen(http);
+var mqtt      		= require('mqtt');
+var url       		= require('url');
 var port 			= process.env.PORT || 3000;
+
+
+//*********************************//
+//*** 	   Configure MQTT       ***//
+//*********************************//
+var deviceRoot		= "sensors/data/";
+var visitas 		= 0;
+var collection,client;
+var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:14017');
+var auth = (mqtt_url.auth || ':').split(':');
+client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
+    username: auth[0],
+    password: auth[1]
+});
+
+//*********************************//
+//*** 	 Configure Socket.io    ***//
+//*********************************//
+io.sockets.on('connection', function(socket){
+  visitas++;	
+
+  socket.emit('visitas', visitas);  
+  socket.broadcast.emit('visitas', visitas);
+  socket.broadcast.emit('chat message', 'Logged in : '+socket.handshake.address); 
+  
+  //GET MQTT MESSAGES
+  client.subscribe(deviceRoot+"+");
+  client.on('message', function(topic, message) {   		
+  		socket.emit('chat message', 'CloudMQTT [topic]='+topic+' [message]='+message);  
+  });  	
+
+  socket.on('chat message', function(nick, msg){    
+    socket.emit('chat message', '('+nick+') '+msg);
+    socket.broadcast.emit('chat message', '('+nick+') '+msg);
+  });
+
+  socket.on('disconnect', function(){
+    visitas--;    
+    socket.broadcast.emit('visitas', visitas);
+    socket.broadcast.emit('chat message', 'Log out : '+socket.handshake.address);
+  });
+
+});
+
+
 
 //*********************************//
 //*** 	Define TEMPLATE ENGINE  ***//
@@ -66,7 +115,7 @@ app.use('/', routes);
 //*********************************//
 //***       Create Server       ***//
 //*********************************//
-app.listen(port, function(){
+http.listen(port, function(){
 	console.log("Listening on port " + port);
 });
 

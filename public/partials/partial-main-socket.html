@@ -1,0 +1,26 @@
+<div class="container">
+<div class="jumbotron">
+  <h1>Socket.io & CloudMQTT Chat Room</h1>
+  <p ng-repeat="message in messages track by $index">{{message}}</p>
+  <h6>Total de visitas na sala de Chat : {{visitas}}</h6>
+    <form class="form" role="form" ng-submit="SendMsg()">        
+    <fieldset>
+    <div class="col-sm-3">
+    <input type="text" class="form-control" placeholder="Informe seu nickname" ng-model="msg.from" ng-required="true" autofocus>
+    </div>
+    <div class="col-sm-9">
+    <div class="input-group">      
+      <input type="text" class="form-control" placeholder="Digite aqui sua mensagem" ng-model="msg.text" ng-required="true" autofocus>
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+      </span>
+    </div>
+    <!--
+    <br>
+    <button class="btn btn-info" type="submit">Enviar Mensagem</Button>
+    -->
+    </form>  
+    <div>
+    </fieldset>
+</div>
+</div>

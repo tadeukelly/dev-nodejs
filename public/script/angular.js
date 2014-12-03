@@ -1,6 +1,6 @@
 var app = angular.module('myApp', ['ui.router']);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     
     $urlRouterProvider.otherwise('/login');
     
@@ -28,7 +28,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/organizacao',
             templateUrl: '../partials/partial-main-organizacao.html',
             controller: 'MainController'        
-        })      
+        }) 
+
+        .state('app.chat', {
+            url: '/chat',
+            templateUrl: '../partials/partial-main-socket.html',
+            controller: 'ChatController'        
+        });
+
+        $locationProvider.html5Mode(true);      
         
 });
 
@@ -163,6 +171,25 @@ app.controller('MainController', ['$scope', '$http', '$timeout', '$state', funct
     }
 
   }
-]);  
+]); 
+
+
+app.controller('ChatController', ['$scope', function($scope) {  
+  $scope.messages=[];  
+ 
+  var socket = io.connect();
+  $scope.SendMsg = function() {      
+      socket.emit('chat message', $scope.msg.from, $scope.msg.text);      
+  };
+  socket.on('chat message', function(data){
+      $scope.messages.push(data);
+      $scope.$apply();
+  });
+ socket.on('visitas', function(data){
+      $scope.visitas = data;
+      $scope.$apply();
+  });
+}]);    
+
 
 
