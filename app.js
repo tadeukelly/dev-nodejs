@@ -115,7 +115,7 @@ app.use('/', routes);
 //*********************************//
 //***       Create Server       ***//
 //*********************************//
-app.listen(port, function(){
+http.listen(port, function(){
 	console.log("Listening on port " + port);
 });
 
