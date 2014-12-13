@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ui.router']);
+var app = angular.module('myApp', ['ui.router',"highcharts-ng"]);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     
@@ -36,7 +36,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             controller: 'ChatController'        
         });
 
-        $locationProvider.html5Mode(true);      
+        //$locationProvider.html5Mode(true);      
         
 });
 
@@ -176,7 +176,42 @@ app.controller('MainController', ['$scope', '$http', '$timeout', '$state', funct
 
 app.controller('ChatController', ['$scope', function($scope) {  
   $scope.messages=[];  
- 
+  $scope.xAxisCategories=[];
+  $scope.dataSeries=[];
+
+  $scope.chartConfig = {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Monthly Average Temperature'
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com'
+        },
+        xAxis: {
+                categories: $scope.xAxisCategories                
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Nivel do Solo',
+            data: $scope.dataSeries
+        }]
+    };
+
+
   var socket = io.connect();
   $scope.SendMsg = function() {      
       socket.emit('chat message', $scope.msg.from, $scope.msg.text);      
@@ -185,10 +220,32 @@ app.controller('ChatController', ['$scope', function($scope) {
       $scope.messages.push(data);
       $scope.$apply();
   });
- socket.on('visitas', function(data){
+  socket.on('visitas', function(data){
       $scope.visitas = data;
       $scope.$apply();
   });
+  socket.on('mqtt', function(data){
+      $scope.messages.push(data);
+      addPoint(parseInt(data, 10));
+      $scope.$apply();
+  });
+
+  function addPoint(data) {
+        moment().zone('BRST');        
+        var x = moment().format('ddd DD-MMM HH[h]mm');
+        var y = data;      
+        $scope.dataSeries.push(y)
+        $scope.xAxisCategories.push(x)                  
+  }
+
+  $scope.addPoints = function () {
+        moment().zone('BRST');        
+        var x = moment().format('ddd DD-MMM HH[h]mm');
+        var y = Math.floor(Math.random()*15);      
+        $scope.dataSeries.push(y)
+        $scope.xAxisCategories.push(x)        
+    };
+  
 }]);    
 
 

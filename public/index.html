@@ -1,22 +1,24 @@
 <!doctype html>
 <html ng-app="myApp"> 
-  <head>    
-    <!-- Latest compiled and minified CSS -->
+  <head>
+    <!--<base href="/"> -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">   
+    <link rel="stylesheet" href="style/style.css"> 
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>    
-    <script src="script/angular.js"></script>    
-    <link rel="stylesheet" href="style/style.css">   
-    <base href="/"> 
+    <script src="script/angular.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700,400italic,600italic,700italic,800italic,300italic" rel="stylesheet" type="text/css">
   </head>
   <body>    
     <div ui-view></div>    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>    
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/highcharts-release/highcharts.src.js"></script>
+    <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+    <script src="/bower_components/highcharts-release/themes/sand-signika.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/moment/locale/pt-br.js"></script>
   </body>
 </html>

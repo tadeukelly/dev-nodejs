@@ -7,6 +7,7 @@ var morgan      	= require('morgan');  // log requests to the console (express4)
 var passport 		= require('passport');
 var session  		= require('express-session');
 var mongoose 		= require('mongoose');
+var favicon     = require('serve-favicon');
 var db 				= require('./config/database');
 var routes  		= require('./routes/index');
 var user    		= require('./routes/user');
@@ -45,7 +46,7 @@ io.sockets.on('connection', function(socket){
   //GET MQTT MESSAGES
   client.subscribe(deviceRoot+"+");
   client.on('message', function(topic, message) {   		
-  		socket.emit('chat message', 'CloudMQTT [topic]='+topic+' [message]='+message);  
+  		socket.emit('mqtt', message);  
   });  	
 
   socket.on('chat message', function(nick, msg){    
@@ -74,6 +75,7 @@ app.set('view engine', 'handlebars');
 //*********************************//
 //*** 	  Define STATIC DIR     ***//
 //*********************************//
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 

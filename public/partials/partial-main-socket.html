@@ -1,6 +1,10 @@
 <div class="container">
+  <div class="row">
+     <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+  </div>
 <div class="jumbotron">
   <h1>Socket.io & CloudMQTT Chat Room</h1>
+
   <p ng-repeat="message in messages track by $index">{{message}}</p>
   <h6>Total de visitas na sala de Chat : {{visitas}}</h6>
     <form class="form" role="form" ng-submit="SendMsg()">        
@@ -13,12 +17,9 @@
       <input type="text" class="form-control" placeholder="Digite aqui sua mensagem" ng-model="msg.text" ng-required="true" autofocus>
       <span class="input-group-btn">
         <button class="btn btn-primary" type="submit">Enviar</button>
+        <button class="btn btn-primary" ng-click="addPoints()">Add Points</button>
       </span>
     </div>
-    <!--
-    <br>
-    <button class="btn btn-info" type="submit">Enviar Mensagem</Button>
-    -->
     </form>  
     <div>
     </fieldset>
