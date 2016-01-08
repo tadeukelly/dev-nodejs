@@ -144,13 +144,13 @@ app.controller('MainController', ['$scope', '$http', '$timeout', '$state', funct
       });
   };
 */
-$http.get("/api/menu").
-success(function(response, status, headers, config) {
-  $scope.menu = response;
-}).
-error(function(response, status, headers, config) {
-  showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
-});
+  $http.get("/api/menu").
+  success(function(response, status, headers, config) {
+    $scope.menu = response;
+  }).
+  error(function(response, status, headers, config) {
+    showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
+  });
 
   $scope.ConsultaBusOrg = function() {
       $scope.wheel='glyphicon glyphicon-refresh glyphicon-refresh-animate';
