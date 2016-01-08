@@ -3,6 +3,7 @@ var app = angular.module('myApp', ['ui.router',"highcharts-ng"]);
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     
     $urlRouterProvider.otherwise('/login');
+
     
     $stateProvider
         
