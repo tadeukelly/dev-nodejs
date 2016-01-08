@@ -1,18 +1,18 @@
 var app = angular.module('myApp', ['ui.router',"highcharts-ng"]);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-    
+
     $urlRouterProvider.otherwise('/login');
 
-    
+
     $stateProvider
-        
+
         .state('login', {
             url: '/login',
             templateUrl: '../partials/partial-login.html',
             controller: 'LoginController'
         })
-        
+
         .state('signin', {
             url: '/signin',
             templateUrl: '../partials/partial-signin.html',
@@ -23,22 +23,22 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: '/app',
             templateUrl: '../partials/partial-main.html',
             controller: 'MainController'
-        })  
+        })
 
         .state('app.organizacao', {
             url: '/organizacao',
             templateUrl: '../partials/partial-main-organizacao.html',
-            controller: 'MainController'        
-        }) 
+            controller: 'MainController'
+        })
 
         .state('app.chat', {
             url: '/chat',
             templateUrl: '../partials/partial-main-socket.html',
-            controller: 'ChatController'        
+            controller: 'ChatController'
         });
 
-        //$locationProvider.html5Mode(true);      
-        
+        //$locationProvider.html5Mode(true);
+
 });
 
 
@@ -47,7 +47,7 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$ro
 // enumerate routes that don't need authentication
   var routesThatDontRequireAuth = ['/login'];
 
-  // check if current location matches route  
+  // check if current location matches route
   var routeClean = function (route) {
     return _.find(routesThatDontRequireAuth,
       function (noAuthRoute) {
@@ -57,18 +57,18 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$ro
 
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     // if route requires auth and user is not logged in
-    if (!routeClean($location.url())) 
+    if (!routeClean($location.url()))
     {
       console.log("aqui");
       $http.get('/user/isloggedin')
-          .success(function(response) {        
-                if (response.status.trim().toLowerCase() == "success"){              
-                  $state.go('app');                  
-                }            
-      });            
+          .success(function(response) {
+                if (response.status.trim().toLowerCase() == "success"){
+                  $state.go('app');
+                }
+      });
     }
   });
-  
+
   $scope.Login = function() {
       $http.post('/user/login', {
           username: $scope.username,
@@ -78,29 +78,29 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$ro
               $state.go('app');
             } else {
               showAlert('warning', 'Oooops!', response.message.trim());
-            } 
+            }
           })
-          .error(function(response, err) {            
+          .error(function(response, err) {
               showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+err+' - '+response+']');
           });
-    };    
+    };
 
   $scope.SignUp = function() {
 
       $http.post('/user/signup',  {
           username: $scope.username,
           password: $scope.password,
-        }).success(function(response) {              
+        }).success(function(response) {
               $scope.username='';
-              $scope.password='';              
+              $scope.password='';
               showAlert('success', 'Obaaaaa!', 'Usuário criado com sucesso!');
           })
-          .error(function(response, err) {            
+          .error(function(response, err) {
               $scope.username='';
               $scope.password='';
               if (err === 401)
                   showAlert('info', 'Opa!', 'Este usuário já existe, por favor, escolha um outro nome.', 5000);
-              else  
+              else
                   showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+err+' - '+response+']');
           });
   };
@@ -121,27 +121,36 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$ro
     }
 
   }
-]);  
+]);
 
 
 app.controller('MainController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
-  
+
   $http.get('/user/isloggedin')
       .success(function(response) {
-            if (response.status.trim().toLowerCase() != "success"){              
+            if (response.status.trim().toLowerCase() != "success"){
               $state.go('login');
-            }            
-      });      
-	
-  $scope.GetMenuApi = function() {          
+            }
+      });
+
+/*
+  $scope.GetMenuApi = function() {
       $http.get("/api/menu").
       success(function(response, status, headers, config) {
         $scope.menu = response;
       }).
       error(function(response, status, headers, config) {
-        showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');       
+        showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
       });
   };
+*/
+$http.get("/api/menu").
+success(function(response, status, headers, config) {
+  $scope.menu = response;
+}).
+error(function(response, status, headers, config) {
+  showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
+});
 
   $scope.ConsultaBusOrg = function() {
       $scope.wheel='glyphicon glyphicon-refresh glyphicon-refresh-animate';
@@ -151,7 +160,7 @@ app.controller('MainController', ['$scope', '$http', '$timeout', '$state', funct
         $scope.wheel='';
       }).
       error(function(response, status, headers, config) {
-        showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');       
+        showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
         $scope.wheel='';
       });
   };
@@ -172,11 +181,11 @@ app.controller('MainController', ['$scope', '$http', '$timeout', '$state', funct
     }
 
   }
-]); 
+]);
 
 
-app.controller('ChatController', ['$scope', function($scope) {  
-  $scope.messages=[];  
+app.controller('ChatController', ['$scope', function($scope) {
+  $scope.messages=[];
   $scope.xAxisCategories=[];
   $scope.dataSeries=[];
 
@@ -191,7 +200,7 @@ app.controller('ChatController', ['$scope', function($scope) {
             text: 'Source: WorldClimate.com'
         },
         xAxis: {
-                categories: $scope.xAxisCategories                
+                categories: $scope.xAxisCategories
         },
         yAxis: {
             title: {
@@ -214,8 +223,8 @@ app.controller('ChatController', ['$scope', function($scope) {
 
 
   var socket = io.connect();
-  $scope.SendMsg = function() {      
-      socket.emit('chat message', $scope.msg.from, $scope.msg.text);      
+  $scope.SendMsg = function() {
+      socket.emit('chat message', $scope.msg.from, $scope.msg.text);
   };
   socket.on('chat message', function(data){
       $scope.messages.push(data);
@@ -232,22 +241,19 @@ app.controller('ChatController', ['$scope', function($scope) {
   });
 
   function addPoint(data) {
-        moment().zone('BRST');        
+        moment().zone('BRST');
         var x = moment().format('ddd DD-MMM HH[h]mm');
-        var y = data;      
+        var y = data;
         $scope.dataSeries.push(y)
-        $scope.xAxisCategories.push(x)                  
+        $scope.xAxisCategories.push(x)
   }
 
   $scope.addPoints = function () {
-        moment().zone('BRST');        
+        moment().zone('BRST');
         var x = moment().format('ddd DD-MMM HH[h]mm');
-        var y = Math.floor(Math.random()*15);      
+        var y = Math.floor(Math.random()*15);
         $scope.dataSeries.push(y)
-        $scope.xAxisCategories.push(x)        
+        $scope.xAxisCategories.push(x)
     };
-  
-}]);    
 
-
-
+}]);
