@@ -16,20 +16,20 @@
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">              
-              <!--<li ng-repeat="item in menu"><a href="#">{{item.menu}}</a></li>-->              
+            <ul class="nav navbar-nav">
+              <li ng-repeat="item in menu"><a href="#">{{item.menu}}</a></li>
               <li class="dropdown">
                 <a ui-sref="app" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a ui-sref=".organizacao">Consulta MongoDB</a></li>
                   <li class="divider"></li>
-                  <li><a ui-sref=".chat">Chat</a></li>                  
+                  <li><a ui-sref=".chat">Chat</a></li>
                 </ul>
-              </li>              
-            </ul>            
+              </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
               <!--<li><a href="#"><span class="glyphicon glyphicon-align-justify" id="slide-submenu"></span></a></li>-->
-              <li><a href="/user/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>              
+              <li><a href="/user/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         <!--</div>--><!-- /.container-fluid -->
@@ -41,12 +41,12 @@
   <div class="row">
     <!--
     <div class="col-sm-2 sidebar">
-    <div class="list-group">        
+    <div class="list-group">
         <span href="#" class="list-group-item">
-        <span class="glyphicon glyphicon-th-list sidebar-menu-glyphicon"></span>Submenu            
+        <span class="glyphicon glyphicon-th-list sidebar-menu-glyphicon"></span>Submenu
         </span>
         <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open sidebar-menu-glyphicon"></span>Menu</a>
-        <a href="#" class="list-group-item" ng-repeat="item in menu"><span class="glyphicon glyphicon-folder-open sidebar-menu-glyphicon"></span>{{item.menu}}</a>        
+        <a href="#" class="list-group-item" ng-repeat="item in menu"><span class="glyphicon glyphicon-folder-open sidebar-menu-glyphicon"></span>{{item.menu}}</a>
     </div>
     </div>
     -->
@@ -54,13 +54,13 @@
     <!-- CONTENT -->
     <div ui-view></div>
     <!-- END CONTENT -->
-    </div>    
+    </div>
   </div>
-</div>    
+</div>
 <!--
     <script>
     $(function(){
-      $('#slide-submenu').on('click',function() {             
+      $('#slide-submenu').on('click',function() {
         $('.sidebar').is(":visible") ? $('.sidebar').fadeOut() : $('.sidebar').fadeIn();
       });
     })
