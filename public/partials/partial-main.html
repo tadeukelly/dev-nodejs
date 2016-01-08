@@ -17,13 +17,13 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li ng-repeat="item in menu"><a href="#">{{item.menu}}</a></li>
               <li class="dropdown">
                 <a ui-sref="app" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a ui-sref=".organizacao">Consulta MongoDB</a></li>
                   <li class="divider"></li>
                   <li><a ui-sref=".chat">Chat</a></li>
+                  <li ng-repeat="item in menu"><a href="#">{{item.menu}}</a></li>
                 </ul>
               </li>
             </ul>
