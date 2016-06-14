@@ -2,72 +2,73 @@ var app = angular.module('myApp', ['ui.router',"highcharts-ng"]);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    $urlRouterProvider.otherwise('/login');
-
-
     $stateProvider
 
         .state('login', {
             url: '/login',
             templateUrl: '../partials/partial-login.html',
-            controller: 'LoginController'
+            controller: 'LoginController',
+            authenticate: false
         })
 
         .state('signin', {
             url: '/signin',
             templateUrl: '../partials/partial-signin.html',
-            controller: 'LoginController'
+            controller: 'LoginController',
+            authenticate: false
         })
 
         .state('app', {
             url: '/app',
             templateUrl: '../partials/partial-main.html',
-            controller: 'MainController'
+            controller: 'MainController',
+            authenticate: true
         })
 
         .state('app.organizacao', {
             url: '/organizacao',
             templateUrl: '../partials/partial-main-organizacao.html',
-            controller: 'MainController'
+            controller: 'MainController',
+            authenticate: true
         })
 
         .state('app.chat', {
             url: '/chat',
             templateUrl: '../partials/partial-main-socket.html',
-            controller: 'ChatController'
+            controller: 'ChatController',
+            authenticate: true
         });
 
+        $urlRouterProvider.otherwise('login');
         //$locationProvider.html5Mode(true);
+
+});
+
+app.run(function ($rootScope, $state, $http) {
+//  $scope.LoggedIn = false;
+
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    var requireLogin = toState.authenticate;
+
+      if (requireLogin) {
+        $http.get('/user/isloggedin')
+            .success(function(response) {
+                  if (response.status.trim().toLowerCase() == "success"){
+                    //event.preventDefault();
+                    $state.go('app');
+                  }else {
+                    $state.go('login');
+                  }
+        });
+      }
+
+  });
 
 });
 
 
 
-app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$rootScope', function($scope, $http, $timeout, $state, $rootScope) {
-// enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/login'];
-
-  // check if current location matches route
-  var routeClean = function (route) {
-    return _.find(routesThatDontRequireAuth,
-      function (noAuthRoute) {
-        return _.str.startsWith(route, noAuthRoute);
-      });
-  };
-
-  $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    // if route requires auth and user is not logged in
-    if (!routeClean($location.url()))
-    {
-      console.log("aqui");
-      $http.get('/user/isloggedin')
-          .success(function(response) {
-                if (response.status.trim().toLowerCase() == "success"){
-                  $state.go('app');
-                }
-      });
-    }
-  });
+app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
 
   $scope.Login = function() {
       $http.post('/user/login', {
@@ -126,24 +127,6 @@ app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', '$ro
 
 app.controller('MainController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
 
-  $http.get('/user/isloggedin')
-      .success(function(response) {
-            if (response.status.trim().toLowerCase() != "success"){
-              $state.go('login');
-            }
-      });
-
-/*
-  $scope.GetMenuApi = function() {
-      $http.get("/api/menu").
-      success(function(response, status, headers, config) {
-        $scope.menu = response;
-      }).
-      error(function(response, status, headers, config) {
-        showAlert('danger', 'Ohhhhh!', 'Erro de processamento. Por favor, contate o administrador do sistema e informe o erro ['+response+']');
-      });
-  };
-*/
   $http.get("/api/menu").
   success(function(response, status, headers, config) {
     $scope.menu = response;
