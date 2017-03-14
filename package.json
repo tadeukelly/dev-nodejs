@@ -12,7 +12,7 @@
     "express": "^4.10.4",
     "express-handlebars": "^1.1.0",
     "express-session": "^1.9.1",
-    "mongoose": "^4.1.9",
+    "mongoose": "4.1.9",
     "morgan": "^1.1.1",
     "mqtt": "^0.3.13",
     "passport": "^0.2.1",
