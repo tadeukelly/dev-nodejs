@@ -27,10 +27,14 @@ router.get("/org/:name", isLoggedIn, function(req, res){
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {        
     // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
+    if (req.isAuthenticated()){
+     console.log('aqui');
+	    return next();
+    }else{
     // if they aren't redirect them to the home page
+	 console.log('not logged id');
     res.redirect('/');
+    }
 };
 
 module.exports = router;
