@@ -53,8 +53,8 @@ app.run(function ($rootScope, $state, $http) {
       if (requireLogin) {
         $http.get('/user/isloggedin')
             .success(function(response) {
-                 console.log("retorno angular isLoggedin...");
-                 console.log("response>>>"+response);            
+                 showAlert('info', 'Opa!', response, 5000);
+                             
                   if (response.status.trim().toLowerCase() == "success"){
                     //event.preventDefault();
                     $state.go('app');
