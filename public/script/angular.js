@@ -68,6 +68,23 @@ app.run(function ($rootScope, $state, $http) {
 
 });
 
+var alertTimeout;
+  function showAlert(type, title, message, timeout) {
+      $scope.alert = {
+        hasBeenShown: true,
+        show: true,
+        type: type,
+        message: message,
+        title: title
+      };
+      $timeout.cancel(alertTimeout);
+      alertTimeout = $timeout(function() {
+        $scope.alert.show = false;
+      }, timeout || 3000);
+    }
+
+  }
+
 
 
 app.controller('LoginController', ['$scope', '$http', '$timeout', '$state', function($scope, $http, $timeout, $state) {
