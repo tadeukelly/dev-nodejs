@@ -22,21 +22,21 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
             url: '/app',
             templateUrl: '../partials/partial-main.html',
             controller: 'MainController',
-            authenticate: true
+            authenticate: false
         })
 
         .state('app.organizacao', {
             url: '/organizacao',
             templateUrl: '../partials/partial-main-organizacao.html',
             controller: 'MainController',
-            authenticate: true
+            authenticate: false
         })
 
         .state('app.chat', {
             url: '/chat',
             templateUrl: '../partials/partial-main-socket.html',
             controller: 'ChatController',
-            authenticate: true
+            authenticate: false
         });
 
         $urlRouterProvider.otherwise('login');
@@ -53,8 +53,7 @@ app.run(function ($rootScope, $state, $http) {
       if (requireLogin) {
         $http.get('/user/isloggedin')
             .success(function(response) {
-                 showAlert('info', 'Opa!', response, 5000);
-                             
+                                             
                   if (response.status.trim().toLowerCase() == "success"){
                     //event.preventDefault();
                     $state.go('app');
@@ -67,23 +66,6 @@ app.run(function ($rootScope, $state, $http) {
   });
 
 });
-
-var alertTimeout;
-  function showAlert(type, title, message, timeout) {
-      $scope.alert = {
-        hasBeenShown: true,
-        show: true,
-        type: type,
-        message: message,
-        title: title
-      };
-      $timeout.cancel(alertTimeout);
-      alertTimeout = $timeout(function() {
-        $scope.alert.show = false;
-      }, timeout || 3000);
-    }
-
-  }
 
 
 
