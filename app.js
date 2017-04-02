@@ -47,7 +47,8 @@ io.sockets.on('connection', function(socket){
   
   //GET MQTT MESSAGES
   client.subscribe(deviceRoot+"+");
-  client.on('message', function(topic, message) {   		
+  client.on('message', function(topic, message) { 
+	  console.log(topic + '--'+message);
   		socket.emit('mqtt', message);  
   });  	
 
