@@ -23,7 +23,7 @@ var port 			= process.env.PORT || 3000;
 //*********************************//
 //*** 	   Configure MQTT       ***//
 //*********************************//
-var deviceRoot		= "sensors/data";
+var deviceRoot		= "sensors/+";
 var visitas 		= 0;
 var collection,client;
 //var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:11962');
