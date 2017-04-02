@@ -26,16 +26,8 @@ var port 			= process.env.PORT || 3000;
 var deviceRoot		= "sensors/data/";
 var visitas 		= 0;
 var collection,client;
-//var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:11962');
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m12.cloudmqtt.com:17877');
-var auth = (mqtt_url.auth || ':').split(':');
-console.log('MQTT PORT='+mqtt_url.port + ' HOSTNAME='+mqtt_url.hostname + ' URL='+process.env.CLOUDMQTT_URL+' auth='+mqtt_url.auth);
-
-client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
-//client = mqtt.createClient(17877, 'm11.cloudmqtt.com', {
-    username: auth[0],
-    password: auth[1]
-});
+var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:11962');
+client  = mqtt.connect(mqtt_url);
 
 //*********************************//
 //*** 	 Configure Socket.io    ***//
