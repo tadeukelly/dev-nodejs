@@ -26,7 +26,7 @@ var port 			= process.env.PORT || 3000;
 var deviceRoot		= "sensors/data/";
 var visitas 		= 0;
 var collection,client;
-var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:14017');
+var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:11962');
 var auth = (mqtt_url.auth || ':').split(':');
 client = mqtt.createClient(mqtt_url.port, mqtt_url.hostname, {
     username: auth[0],
