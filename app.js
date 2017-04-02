@@ -23,7 +23,7 @@ var port 			= process.env.PORT || 3000;
 //*********************************//
 //*** 	   Configure MQTT       ***//
 //*********************************//
-var deviceRoot		= "sensors/data/";
+var deviceRoot		= "sensors/data";
 var visitas 		= 0;
 var collection,client;
 //var mqtt_url = url.parse(process.env.CLOUDMQTT_URL || 'mqtt://arduino:arduino@m11.cloudmqtt.com:11962');
@@ -41,7 +41,7 @@ io.sockets.on('connection', function(socket){
   socket.broadcast.emit('chat message', 'Logged in : '+socket.handshake.address); 
   
   //GET MQTT MESSAGES
-  client.subscribe(deviceRoot+"+");
+  client.subscribe(deviceRoot);
   client.on('message', function(topic, message) { 
 	  console.log(topic + '--'+message);
   		socket.emit('mqtt', message);  
